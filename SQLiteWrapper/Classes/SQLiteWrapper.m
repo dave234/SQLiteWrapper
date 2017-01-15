@@ -1,5 +1,5 @@
 //
-//  SqliteWrapper.m
+//  SQLiteWrapper.m
 //  MidiBeatBoxFFT
 //
 //  Created by david oneill on 4/16/15.
@@ -27,8 +27,8 @@
  *
  */
 
-
-#import "SqliteWrapper.h"
+#import <sqlite3.h>
+#import "SQLiteWrapper.h"
 
 NSString *const k_sql_type_int =                    @"integer";
 NSString *const k_sql_type_real =                   @"real";
@@ -92,7 +92,7 @@ static NSArray* forceArray(id object){
 
 
 @interface Query()
-@property (weak)        SqliteWrapper           *sqliteWrapper;
+@property (weak)        SQLiteWrapper           *sqliteWrapper;
 @property               NSString                *table;
 @property               NSArray                 *keys;
 @property               NSArray                 *values;
@@ -122,15 +122,15 @@ typedef int (^BindBlock)(sqlite3_stmt *,id, int);
 typedef id (^ColumnBlock)(sqlite3_stmt *,int);
 
 
-@interface SqliteWrapper()
-
+@interface SQLiteWrapper()
+@property (readonly)    sqlite3    *database;
 @end
 
 
 //_blockTable contains the blocks which convert sqlite bindings to their ObjC counterparts. The k_sql_type constants are the keys.
 //When a table is created,
 
-@implementation SqliteWrapper{
+@implementation SQLiteWrapper{
     pthread_mutex_t *mutex;
     NSDictionary *_blockTable;
     NSString *_path;

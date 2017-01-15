@@ -1,5 +1,5 @@
 //
-//  SqliteWrapper.h
+//  SQLiteWrapper.h
 //  MidiBeatBoxFFT
 //
 //  Created by david oneill on 4/16/15.
@@ -26,7 +26,6 @@
  *
  */
 
-#import <sqlite3.h>
 #import <Foundation/Foundation.h>
 #import <pthread.h>
 
@@ -70,8 +69,8 @@ typedef enum{
 @end
 
 
-@interface SqliteWrapper : NSObject
-@property (readonly)    sqlite3    *database;
+@interface SQLiteWrapper : NSObject
+
 @property  NSMutableDictionary     *schema;
 
 -(id)initWithPath:(NSString *)dbPath;

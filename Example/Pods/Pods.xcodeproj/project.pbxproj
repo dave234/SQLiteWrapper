@@ -13,6 +13,7 @@
 		297A26734F5F518435267424E7F6B4E1 /* Pods-SQLiteWrapper_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D809F5888243CF226586F4D423BC0276 /* Pods-SQLiteWrapper_Example-dummy.m */; };
 		556A89FB1E2B4B7D00D783F6 /* SQLiteWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A89F91E2B4B7D00D783F6 /* SQLiteWrapper.h */; };
 		556A89FC1E2B4B7D00D783F6 /* SQLiteWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 556A89FA1E2B4B7D00D783F6 /* SQLiteWrapper.m */; };
+		556A8A041E2B606400D783F6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A8A031E2B606400D783F6 /* libsqlite3.tbd */; };
 		8A7BBA5203EEA6A44554F110D22F73CD /* Pods-SQLiteWrapper_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E056E258ED49EFD1733DB7DD6F00D81 /* Pods-SQLiteWrapper_Tests-dummy.m */; };
 		983AE82A9EB1BD81A94B676646866918 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		B294E3D68D6263EB0BBAF963CCF88B16 /* SQLiteWrapper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F500CEF348CA1D41DE3302F6B6CE309 /* SQLiteWrapper-dummy.m */; };
@@ -39,6 +40,7 @@
 		50164984EE23539698C068283E494370 /* Pods-SQLiteWrapper_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SQLiteWrapper_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		556A89F91E2B4B7D00D783F6 /* SQLiteWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteWrapper.h; sourceTree = "<group>"; };
 		556A89FA1E2B4B7D00D783F6 /* SQLiteWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteWrapper.m; sourceTree = "<group>"; };
+		556A8A031E2B606400D783F6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		58EB953136762B357663664E0A6DEBFD /* Pods-SQLiteWrapper_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SQLiteWrapper_Example-resources.sh"; sourceTree = "<group>"; };
 		5E1BB6B4CF329E62A59B95EAD7552526 /* Pods_SQLiteWrapper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SQLiteWrapper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645A5930F2E791376993E366BAFB27B3 /* Pods-SQLiteWrapper_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SQLiteWrapper_Example.modulemap"; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556A8A041E2B606400D783F6 /* libsqlite3.tbd in Frameworks */,
 				983AE82A9EB1BD81A94B676646866918 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +192,7 @@
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				556A8A031E2B606400D783F6 /* libsqlite3.tbd */,
 				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
 			);
 			name = Frameworks;
