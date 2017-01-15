@@ -28,6 +28,7 @@
  */
 
 #import <sqlite3.h>
+
 #import "SQLiteWrapper.h"
 
 NSString *const k_sql_type_int =                    @"integer";
@@ -124,6 +125,7 @@ typedef id (^ColumnBlock)(sqlite3_stmt *,int);
 
 @interface SQLiteWrapper()
 @property (readonly)    sqlite3    *database;
+
 @end
 
 
@@ -476,7 +478,9 @@ int add_key_types_to_arrays(void *user_data, int argc, char **argv,
         }
     }
 }
-
+-(sqlite3 *)sqlite{
+    return self.database;
+}
 @end
 
 
@@ -545,6 +549,7 @@ int add_key_types_to_arrays(void *user_data, int argc, char **argv,
 
     NSDictionary *tableDict = self.sqliteWrapper.schema[self.table];
     if (!tableDict) {
+        NSLog(@"table %@ does not exist",self.table);
         return;
     }
     sqlite3_stmt *stmt = [self statement];

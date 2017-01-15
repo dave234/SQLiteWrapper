@@ -26,6 +26,8 @@
  *
  */
 
+//#import <sqlite3.h>
+#import <sqlite3/sqlite3.h>
 #import <Foundation/Foundation.h>
 #import <pthread.h>
 
@@ -70,8 +72,8 @@ typedef enum{
 
 
 @interface SQLiteWrapper : NSObject
-
 @property  NSMutableDictionary     *schema;
+@property (readonly) sqlite3 *sqlite;
 
 -(id)initWithPath:(NSString *)dbPath;
 -(Query *)create:(NSString *)table withKeyTypes:(NSArray *)keyTypeArray withConstraints:(NSString *)constraints;
