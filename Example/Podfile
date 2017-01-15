@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SQLiteWrapper_Example' do
+  pod 'SQLiteWrapper', :path => '../'
+
+  target 'SQLiteWrapper_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
