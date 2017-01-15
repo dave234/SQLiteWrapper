@@ -1,0 +1,16 @@
+PODS:
+  - SQLiteWrapper (0.1.0)
+
+DEPENDENCIES:
+  - SQLiteWrapper (from `../`)
+
+EXTERNAL SOURCES:
+  SQLiteWrapper:
+    :path: ../
+
+SPEC CHECKSUMS:
+  SQLiteWrapper: 511ffaa42d79f6c5c90fbfcc539b5537e9201fe9
+
+PODFILE CHECKSUM: 6035b8848ea33836684e51e990c7e639e28c6c48
+
+COCOAPODS: 1.1.1

@@ -1,0 +1,22 @@
+{
+  "name": "SQLiteWrapper",
+  "version": "0.1.0",
+  "summary": "A short description of SQLiteWrapper.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/SQLiteWrapper",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "dave234": "dave234@users.noreply.github.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/SQLiteWrapper.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "SQLiteWrapper/Classes/**/*"
+}
