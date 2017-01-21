@@ -29,9 +29,12 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
-
+  s.osx.deployment_target = '10.7'
+  #s.platform = :osx
+  #s.platform = :ios
   s.source_files = 'SQLiteWrapper/Classes/**/*'
-  
+ 
+  s.requires_arc = true 
   # s.resource_bundles = {
   #   'SQLiteWrapper' => ['SQLiteWrapper/Assets/*.png']
   # }
