@@ -31,12 +31,14 @@
 
 #import "SQLiteWrapper.h"
 
-NSString *const k_sql_type_int =                    @"integer";
-NSString *const k_sql_type_real =                   @"real";
-NSString *const k_sql_type_blob =                   @"blob";
-NSString *const k_sql_type_text =                   @"text";
-NSString *const k_sql_type_integer_primary_key =    @"integer primary key";
-NSString *const k_sql_type_text_primary_key =       @"text primary key";
+NSString *const k_sql_type_int                                  = @"integer";
+NSString *const k_sql_type_real                                 = @"real";
+NSString *const k_sql_type_blob                                 = @"blob";
+NSString *const k_sql_type_text                                 = @"text";
+NSString *const k_sql_type_integer_primary_key                  = @"integer primary key";
+NSString *const k_sql_type_text_primary_key                     = @"text primary key";
+NSString *const k_sql_type_integer_primary_key_autoincrement    = @"integer primary key AUTOINCREMENT";
+
 
 
 NSString *const k_sql_table_name =                  @"table_name";
@@ -281,7 +283,7 @@ typedef id (^ColumnBlock)(sqlite3_stmt *,int);
 -(NSMutableArray *)fetchTableNames
 {
     sqlite3_stmt* statement;
-    NSString *query = @"SELECT name FROM sqlite_master WHERE type=\'table\'";
+    NSString *query = @"SELECT name FROM sqlite_master WHERE type='table'";
     int retVal = sqlite3_prepare_v2(self.database,
                                     [query UTF8String],
                                     -1,
@@ -295,7 +297,11 @@ typedef id (^ColumnBlock)(sqlite3_stmt *,int);
         {
             NSString *value = [NSString stringWithCString:(const char *)sqlite3_column_text(statement, 0)
                                                  encoding:NSUTF8StringEncoding];
-            [selectedRecords addObject:value];
+            
+            if(![value isEqualToString:@"sqlite_sequence"]){
+                [selectedRecords addObject:value];
+            }
+            
         }
     }
     
@@ -365,6 +371,7 @@ static NSDictionary *createBlockTable(){
                                 stringBinders,k_sql_type_text_primary_key,
                                 intBinders,k_sql_type_int,
                                 intBinders,k_sql_type_integer_primary_key,
+                                intBinders,k_sql_type_integer_primary_key_autoincrement,
                                 doubleBinders,k_sql_type_real,
                                 blobBinders,k_sql_type_blob,
                                 nil];
@@ -389,17 +396,47 @@ static ColumnBlock ColumnFromKey(NSDictionary *table,NSString *key){
 -(void)rebuildSchema{
     NSArray *tablenames = [self fetchTableNames];
     for(NSString *table in tablenames){
-        NSDictionary *mutKeysMutTypes = @{k_sql_column_keys:[[NSMutableArray alloc]init],
-                                          k_sql_column_type:[[NSMutableArray alloc]init]};
+
+        NSMutableArray *columnTypes = [[NSMutableArray alloc]init];
+        NSMutableArray *columnKeys = [[NSMutableArray alloc]init];
+        NSDictionary *mutKeysMutTypes = @{k_sql_column_keys:columnKeys,
+                                          k_sql_column_type:columnTypes};
         
         NSString *query = [NSString stringWithFormat:@"PRAGMA table_info(%@);",table];
         char *error = NULL;
         sqlite3_exec(self.database, query.UTF8String, add_key_types_to_arrays, (__bridge void *)mutKeysMutTypes, &error);
+
+        for (int i = 0; i < columnTypes.count; i++){
+            if ([columnTypes[i] isEqualToString:k_sql_type_integer_primary_key]) {
+                BOOL isAuto = isAutoIncrement(self.database, table);
+                if (isAuto) {
+                    columnTypes[i] = k_sql_type_integer_primary_key_autoincrement;
+                }
+            }
+        }
+        NSLog(@"%@",mutKeysMutTypes);
         [self addTableToSchema:table withKeys:mutKeysMutTypes[k_sql_column_keys] andTypes:mutKeysMutTypes[k_sql_column_type]];
     }
 }
-int add_key_types_to_arrays(void *user_data, int argc, char **argv,
-                            char **azColName) {
+BOOL isAutoIncrement(sqlite3 *database, NSString *table){
+    char *error = NULL;
+
+    NSString *checkAutoQuery = [NSString stringWithFormat:@"SELECT 1 FROM sqlite_master WHERE type='table' AND name='%@' AND sql LIKE '%%AUTOINCREMENT%%';",table];
+    
+    BOOL isAutoIncrement = 0;
+    sqlite3_exec(database, checkAutoQuery.UTF8String, checkAutoIncrement, &isAutoIncrement, &error);
+    if(error)printf("isAutoIncrement error %s\n",error);
+    return isAutoIncrement;
+}
+int checkAutoIncrement(void *user_data, int argc, char **argv, char **azColName){
+    BOOL *isAutoIncrement = user_data;
+    for (int i = 0; i < argc; i++) {
+        printf("%s %s \n",azColName[i],argv[i]);
+    }
+    *isAutoIncrement = argc != 0;
+    return 0;
+}
+int add_key_types_to_arrays(void *user_data, int argc, char **argv, char **azColName) {
     NSDictionary *mutKeysMutTypes = (__bridge NSDictionary *)user_data;
     NSMutableArray *keys = mutKeysMutTypes[k_sql_column_keys];
     NSMutableArray *types = mutKeysMutTypes[k_sql_column_type];
@@ -573,7 +610,7 @@ int add_key_types_to_arrays(void *user_data, int argc, char **argv,
         }
         binder++;
     }
-    if ([tableDict[k_sql_column_type]containsString:k_sql_type_integer_primary_key]) {
+    if ([tableDict[k_sql_column_type]containsString:k_sql_type_integer_primary_key] || [tableDict[k_sql_column_type]containsString:k_sql_type_integer_primary_key_autoincrement]) {
         [self step:stmt];
         int64_t rowID = sqlite3_last_insert_rowid(self.sqliteWrapper.database);
         self.insertID = [NSNumber numberWithInt:(int)rowID];

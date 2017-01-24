@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSString *const k_sql_type_text;
 FOUNDATION_EXPORT NSString *const k_sql_type_blob;
 FOUNDATION_EXPORT NSString *const k_sql_type_text_primary_key;
 FOUNDATION_EXPORT NSString *const k_sql_type_integer_primary_key;
+FOUNDATION_EXPORT NSString *const k_sql_type_integer_primary_key_autoincrement;
 
 typedef enum{
     not_equal_to    = 0x00,
