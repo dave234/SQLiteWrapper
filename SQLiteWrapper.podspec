@@ -8,24 +8,18 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SQLiteWrapper'
-  s.version          = '0.1.1'
-  s.summary          = 'A very lightweight SQLIte wrapper with a SQL like API'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.version          = '0.1.2'
+  s.summary          = 'A very lightweight SQLite wrapper with a SQL like API'
 
   s.description      = <<-DESC
-A very lightweight SQLIte wrapper with a SQL like API
+A very lightweight SQLite wrapper with a SQL like API.
                        DESC
 
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/SQLiteWrapper'
+  s.homepage         = 'https://github.com/dave234/SQLiteWrapper'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'dave234' => 'dave234@users.noreply.github.com' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/SQLiteWrapper.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/dave234/SQLiteWrapper.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'

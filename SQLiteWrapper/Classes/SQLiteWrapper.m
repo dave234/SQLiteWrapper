@@ -414,7 +414,6 @@ static ColumnBlock ColumnFromKey(NSDictionary *table,NSString *key){
                 }
             }
         }
-        NSLog(@"%@",mutKeysMutTypes);
         [self addTableToSchema:table withKeys:mutKeysMutTypes[k_sql_column_keys] andTypes:mutKeysMutTypes[k_sql_column_type]];
     }
 }
