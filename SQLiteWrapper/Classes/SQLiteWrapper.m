@@ -517,6 +517,59 @@ int add_key_types_to_arrays(void *user_data, int argc, char **argv, char **azCol
 -(sqlite3 *)sqlite{
     return self.database;
 }
+-(NSArray *)executeQuery:(NSString *)queryString{
+    sqlite3_stmt* statement;
+    int retVal = sqlite3_prepare_v2(self.database,queryString.UTF8String,-1,&statement,NULL);
+    
+    NSMutableArray *rows = [NSMutableArray array];
+    if ( retVal != SQLITE_OK ){
+        return @[];
+    }
+    while(sqlite3_step(statement) == SQLITE_ROW ){
+        
+        int colCount = sqlite3_column_count(statement);
+        NSMutableDictionary *row = colCount ? [[NSMutableDictionary alloc]initWithCapacity:colCount] : @{};
+        for (int i = 0; i < colCount; i++) {
+            NSString *columnName = [NSString stringWithCString:(const char *)sqlite3_column_name(statement, i) encoding:NSUTF8StringEncoding];
+            int type = sqlite3_column_type(statement, i);
+            switch (type) {
+                case SQLITE_BLOB:{
+                    ColumnBlock columnBlock = _blockTable[k_sql_type_blob][1];
+                    row[columnName] = columnBlock(statement,i);
+                    break;
+                }
+                case SQLITE_NULL:{
+                    row[columnName] = NSNull.null;
+                    break;
+                }
+                case SQLITE_TEXT:{
+                    ColumnBlock columnBlock = _blockTable[k_sql_type_text][1];
+                    row[columnName] = columnBlock(statement,i);
+                    break;
+                }
+                case SQLITE_INTEGER:{
+                    ColumnBlock columnBlock = _blockTable[k_sql_type_int][1];
+                    row[columnName] = columnBlock(statement,i);
+                    break;
+                }
+                case SQLITE_FLOAT:{
+                    ColumnBlock columnBlock = _blockTable[k_sql_type_real][1];
+                    row[columnName] = columnBlock(statement,i);
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            
+        }
+        [rows addObject:row];
+        
+    }
+    sqlite3_finalize(statement);
+    
+    return rows;
+}
 @end
 
 

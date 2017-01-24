@@ -95,6 +95,7 @@ typedef enum{
 -(void)rebuildSchema;
 NSString *desc(NSString *orderBy);
 -(NSData *)dataBaseData;
+-(NSArray *)executeQuery:(NSString *)queryString;
 @end
 
 
